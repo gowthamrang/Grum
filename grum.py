@@ -8,7 +8,7 @@
 
 #Tail call optmiization
 #Type check
-#Garbage collector and other forms of memory management
+#Garbage collector 
 # ...
 
 import logging
@@ -29,6 +29,22 @@ class environment:
     def __init__ (self):        
         #Stack of environments[dictionary]
         self.stackframe = [{}];
+        self.envno = 0;
+    def load(self,var):
+        "Returns a varaible value or a function address"
+        return self.stackframe[self.envno][var];
+        
+    def store(self,var,val):
+        self.stackframe[self.envno][var] = val;
+
+    def moveback(self):
+        self.envno -=1;
+        
+    def movefront(self):
+        self.envno +=1;
+        
+        
+        
 
 
 class errortrace:
@@ -63,10 +79,11 @@ class errortrace:
 
 
 errors = errortrace();    
-env= {};
+#env= environment();
+env ={};
 
 
-
+;
 
 def validateparenthesis(exp):
     cnt = pos = 0;
@@ -118,10 +135,10 @@ def terminal(s):
         try:
             r =float(s);
             e = 'float';
-        except:
+        except: #variable name is else ? what happens
             r = s
             e = 'string'
-            if s in ['if','?','else','var','main','end','=','+','-','*','/','%','<','>','==','!=','quote']:
+            if s in ['if','?','else','var','main','end','=','+','-','*','/','%','<','>','==','!=','quote','while']:
                 e = 'keyword';
     return (r,e);
 
@@ -164,8 +181,11 @@ def evaluator(stms):
             errors.category ="Unimplemented Error"
             errors.throw();
     #binary
-    elif stms[0][0] in ['+','-','*','/','%','>','<','==','!=','=']:
+    elif stms[0][0] in ['+','-','*','/','%','>','<','==','!=','=','while']:
             [exp1,exp2] = stms[1];
+            if stms[0][0] == 'while':
+                while(evaluator(exp1)):
+                    result = evaluator(exp2);
             if stms[0][0] == '=':                
                 result = evaluator(exp2)
                 env.update({exp1[0][0]:result})        

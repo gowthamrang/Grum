@@ -3,14 +3,26 @@
 # An expression is within []
 # The integer and variables are terminals and all others are functions
 # All functions return a value (bool or int) 
-# currently <,> ?(print to console),/,*,%, =, ==, <,>
+# currently <,> ?(print to console),/,*,%, =, ==, <,>,while
 #
 # if else block also following this format  if Expression1 Expression2 else Expression3
 # An expression can be compound
 
+
 #The program starts from the first line and executes them serially
 
 [
+[=[[chitra] [20]]]
+[=[[chitra] [-[[chitra] [1]]]]]
+
+[?[chitra]]
+[while[ [>[[chitra] [0]]] [
+[=[[chitra] [-[[chitra] [1]]]]]
+[?[chitra]]
+
+] 
+]]
+
 	[if[>[[2] [4]]] [
 		[?[2]]
 		[?[3]]
@@ -26,11 +38,10 @@
 # A comment inside
 [
 		#nested comment
-[=[[chitra] [1326]]]
+[=[[chitra] [10]]]
 [?[chitra]]
 ]
-
-
 ]
+
 
 
